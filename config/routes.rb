@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post "users/sign_in", to: 'registrations#login'
 
   get "user/:id", to: 'users#show'
+  #get 'user/update, to: 'users#updater
   delete "user/:id/token", to: 'users#reset'
   delete "user/:id", to: 'users#destroy'
 
