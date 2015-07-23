@@ -8,6 +8,12 @@ Rails.application.routes.draw do
   #get 'user/update, to: 'users#updater
   delete "user/:id/token", to: 'users#reset'
   delete "user/:id", to: 'users#destroy'
+  post "user/:id/sync", to: 'users#sync'
+
+  get "user/:id/tracks", to: 'tracks#by_user'
+  get "tracks", to: 'tracks#index'
+  get "tracks/search", to: 'tracks#search'
+  get "tracks/completion", to: 'tracks#completion'
 
   # get 'users/oauth_test', to: 'registrations#oauth_test'
 

@@ -10,6 +10,10 @@ by Username/Password unless otherwise mentioned.
 Routes elsewhere in the app are authenticated by passing
 an 'Access-Token' header along with the request.
 
+## Parameters
+
+Italicized parameters are optional.
+
 ### User Registration & Auth
 
 #### Creating a User
@@ -131,6 +135,20 @@ Example Failure (Code 404 - Not Found):
 }
 ```
 
+#### Requesting Sync of User's Tracks
+
+**Route:** `POST /user/:id/sync`
+
+**Params:** None
+
+Example Success (Code 200 - OK):
+
+```json
+{
+  "message": "TrackImportJob has been queued."
+}
+```
+
 #### Deleting a User
 
 **Route:** `DELETE /user/:id`
@@ -166,7 +184,7 @@ Example Failure (Code 401 - Unauthorized):
 
 Example Success (Code 202 - Accepted):
 
-(Same JSON as User Creation)
+  (Same JSON as User Creation)
 
 Example Failure: (Code 401 - Unauthorized):
 
@@ -175,3 +193,71 @@ Example Failure: (Code 401 - Unauthorized):
   "message": "You don't have permission to reset token for: 'foo5'."
 }
 ```
+
+### Track Data
+
+#### Getting a User's Tracks
+
+**Route:** `GET /user/:id/tracks`
+
+**Params:** None
+
+Example Success (Code 200 - OK):
+
+```json
+{
+  "tracks": [
+    {},
+    {},
+    {}
+  ]
+}
+```
+
+#### Track Search
+
+**Route:** `GET /tracks/search`
+
+**Params:**
+
+| Parameter  | Type   |
+| ---------- | ------ |
+| City       | String |
+| State      | String |
+| *Genre*    | String |
+
+Example Success (Code 200 - OK):
+
+  Same format as User's Tracks.
+
+#### Track Completions
+
+**Route:** `GET /tracks/completion`
+
+**Params:** None
+
+Example Success (Code 200 - OK):
+
+```json
+{
+  "cities": ["Atlanta", "Chicago", "New York", "San Antonio"],
+  "states": ["GA", "IL", "NY", "TX"],
+  "genres": ["Industrial", "Rap", "R&B", "Darkwave", "Witch Hop"]
+}
+```
+
+#### All Tracks
+
+**Route:** `GET /tracks`
+
+**Params:**
+
+| Parameter | Type   |
+| --------- | -----  |
+| *Page*    | Number |
+
+Returns the tracks in pages of 25 ordered by database ID.
+
+Example Success (Code 200 - OK):
+
+  Same format as User's Tracks.

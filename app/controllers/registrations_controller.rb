@@ -47,7 +47,8 @@ class RegistrationsController < ApplicationController
                    soundcloud_token: @api.access_token,
                    refresh_token:    @api.refresh_token,
                    expires_at:       @api.expires_at,
-                   artist_name:      user_data.artist_name)
+                   artist_name:      user_data.username,
+                   avatar_url:       user_data.avatar_url)
       TrackImportJob.perform_later(@user)
       redirect_to "http://localhost:8000/#/home"
     else

@@ -33,6 +33,8 @@ gem 'puma'
 gem 'foreman'
 # We probably want background jobs now.
 gem 'resque'
+# We should really paginate these results.
+gem 'kaminari'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

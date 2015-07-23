@@ -1,9 +1,15 @@
 class UsersController < ApplicationController
-  before_action :authenticate_with_token!
+  before_action :authenticate_with_token!, except: [:show]
 
   def show
     @user = User.find(params[:id])
     render 'show.json.jbuilder', status: :ok
+  end
+
+  def sync
+    TrackImportJob.perform_later(current_user)
+    render json: { message: "TrackImportJob has been queued." },
+      status: :ok
   end
 
   def reset
@@ -19,14 +25,10 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    if @user.authenticate(params[:password])
-      @user.destroy!
-      render json: { message: "User '#{params[:email]}' was destroyed." },
-        status: :no_content
-    else
-      render json: { message: "Incorrect username or password." },
-        status: :unauthorized
-    end
+    @user.destroy!
+
+    render json: { message: "User '#{@user.username}' was destroyed." },
+      status: :no_content
   end
 
   def updater
